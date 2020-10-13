@@ -25,11 +25,13 @@ EXPOSE 80
 EXPOSE 22
 
 # Simple startup script to avoid some issues observed with container restart
-ADD run-httpd.sh /run-httpd.sh
+ADD run.sh /usr/bin/run.sh
 ADD sshd.sh /sshd.sh
 RUN chmod +x /sshd.sh
 RUN ./sshd.sh
 
-RUN chmod -v +x /run-httpd.sh
+RUN chmod -v +x /usr/bin/run.sh
 
-CMD ["/run-httpd.sh"]
+ENTRYPOINT ["/usr/bin/run.sh"]
+#- command
+CMD ["START"]
