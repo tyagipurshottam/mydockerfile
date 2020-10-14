@@ -7,28 +7,28 @@ LABEL Vendor="CentOS" \
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install httpd && \
-    yum -y --setopt=tsflags=nodocs install openssh-server rsync augeas shadow rssh && \
+    yum -y --setopt=tsflags=nodocs install openssh-server openssh-clients  rsync augeas shadow rssh && \
     yum -y --setopt=tsflags=nodocs install net-tools && \
     yum clean all
 
-#RUN ssh-kegen -A
+RUN ssh-keygen -A
 
 COPY index.html /var/www/html/index.html
 
 RUN echo "root:redhat" | chpasswd
 
-RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-RUN sed -i 's/#*ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
-RUN sed -i 's/#*PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+#RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+#RUN sed -i 's/#*ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/g' /etc/ssh/sshd_config
+#RUN sed -i 's/#*PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 
 EXPOSE 80
 EXPOSE 22
 
 # Simple startup script to avoid some issues observed with container restart
 ADD run.sh /usr/bin/run.sh
-ADD sshd.sh /sshd.sh
-RUN chmod +x /sshd.sh
-RUN ./sshd.sh
+#ADD sshd.sh /sshd.sh
+#RUN chmod +x /sshd.sh
+#RUN ./sshd.sh
 
 RUN chmod -v +x /usr/bin/run.sh
 
