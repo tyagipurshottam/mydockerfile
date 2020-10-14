@@ -25,13 +25,15 @@ EXPOSE 80
 EXPOSE 22
 
 # Simple startup script to avoid some issues observed with container restart
-ADD run.sh /usr/bin/run.sh
+#ADD run.sh /usr/bin/run.sh
+ADD xxx.sh /usr/bin/xxx.sh
 #ADD sshd.sh /sshd.sh
 #RUN chmod +x /sshd.sh
 #RUN ./sshd.sh
 
-RUN chmod -v +x /usr/bin/run.sh
+#RUN chmod -v +x /usr/bin/run.sh
+RUN chmod -v +x /usr/bin/xxx.sh
 
-ENTRYPOINT ["/usr/bin/run.sh"]
+ENTRYPOINT ["/usr/bin/xxx.sh"]
 #- command
 CMD ["START"]
